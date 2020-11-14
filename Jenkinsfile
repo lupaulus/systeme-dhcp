@@ -5,16 +5,12 @@ pipeline {
         stage('Install stuff') { 
             steps{
                 sh "docker-compose -v"
+                sh "docker-compose build"
             } 
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+                sh "docker-compose up"
             }
         }
     }
