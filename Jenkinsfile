@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Install stuff') { 
             steps{
-                sh "echo docker-compose -v"
+                sh "docker-compose -v"
             } 
         }
         stage('Test') {
