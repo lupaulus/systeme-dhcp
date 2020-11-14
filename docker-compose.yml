@@ -2,11 +2,10 @@ version: '3.3'
 
 services:
   dhcpd:
-    build: 
-      context: .
+    image: joebiellik/dhcpd
     restart: unless-stopped
     networks:
-      internal_network:
+      dhcp_network:
         ipv4_address: "192.168.16.1"
     volumes:
       - ./dhcpd.conf:/etc/dhcp/dhcpd.conf
