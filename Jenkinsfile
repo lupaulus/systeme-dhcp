@@ -5,6 +5,8 @@ pipeline {
         stage('Install stuff') { 
             steps{
                 sh "docker-compose -v"
+                sh "docker -v"
+                sh "docker network prune -f"
                 sh "docker-compose build"
             } 
         }
