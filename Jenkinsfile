@@ -2,9 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
-            steps {
-                echo 'Building..'
+        stage('Install stuff') { 
+            {
+               steps{
+                 sh echo docker-compose -v
+               } 
             }
         }
         stage('Test') {
