@@ -12,7 +12,7 @@ services:
       - ./dhcpd.conf:/etc/dhcp/dhcpd.conf
 
 networks:
-  internal_network:
+  dhcp_network:
     ipam:
       config:
         - subnet: "192.168.16.0/24"
