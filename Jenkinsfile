@@ -7,7 +7,6 @@ pipeline {
                 sh "docker-compose -v"
                 sh "docker -v"
                 sh "docker network prune -f"
-                sh "docker-compose down"
                 sh "docker rmi -f ${docker images -a -q}"
                 sh "docker-compose build"
             } 
