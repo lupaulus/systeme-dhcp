@@ -1,19 +1,20 @@
-FROM ubuntu:18.04
+FROM debian:9
 
 RUN apt update 2>/dev/null
-
+RUN apt-get install -y apt-utils 2>/dev/null
 RUN apt-get install -y software-properties-common 2>/dev/null
-RUN add-apt-repository universe
 RUN apt-get update 2>/dev/null
-RUN apt-get install -y git vim mc apache2 apache2-utils 2>/dev/null
+RUN apt-get install -y git vim mc sudo gosu apache2 apache2-utils openssh-server 2>/dev/null
+
 
 RUN a2enmod env cgi alias rewrite
 RUN mkdir /var/www/git
+RUN chmod 777 -R /var/www/git/
 RUN chown -Rfv www-data:www-data /var/www/git
 RUN rm -rf /var/www/html/index.html
 
-RUN git config --system http.receivepack true
-RUN git config --system http.uploadpack true 
+RUN git config --system receivepack true
+RUN git config --system uploadpack true
 
 
 RUN chown -Rfv www-data:www-data /var/www/git
@@ -25,6 +26,7 @@ RUN a2ensite git.conf
 
 
 
+
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
 ENV APACHE_LOG_DIR /var/log/apache2
@@ -32,8 +34,16 @@ ENV APACHE_LOCK_DIR /var/lock/apache2
 ENV APACHE_PID_FILE /var/run/apache2.pid
 
 
-CMD /usr/sbin/apache2ctl -D FOREGROUND
 
 
 
-EXPOSE 80/tcp
+RUN useradd -rm -d /home/ssh -s /bin/bash -g root -G root,www-data,sudo -u 1000 ssh
+RUN  echo 'ssh:ssh' | chpasswd
+COPY ./git-server/id_rsa.pub /home/ssh/.ssh/authorized_keys
+COPY ./git-server/id_rsa /home/ssh/.ssh/id_rsa
+CMD gosu root service ssh start && \
+    /usr/sbin/apache2ctl -D FOREGROUND 
+    
+
+EXPOSE 80/tcp 
+EXPOSE 22/tcp

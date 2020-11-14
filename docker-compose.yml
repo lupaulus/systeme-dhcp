@@ -1,12 +1,14 @@
 version: '3.8'
 services:
   jenkins:
-    image: jenkins/jenkins:lts
+    build:
+      context: .
+      dockerfile: jenkins.dockerfile
     privileged: true
     user: root
     ports:
-    - 8080:8080
-    - 50000:50000
+    - "8080:8080"
+    - "50000:50000"
     container_name: jenkins
     volumes:
     - ./jenkins_home:/var/jenkins_home
@@ -19,8 +21,10 @@ services:
     build:
       context: .
       dockerfile: gitserve.dockerfile
-    ports: 
-    - 80:80
+    container_name: git-serve
+    ports:
+    - "22:22"
+    - "80:80"
     networks: 
     - default
 
