@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 services:
   jenkins:
     build:
@@ -15,7 +15,8 @@ services:
     - /var/run/docker.sock:/var/run/docker.sock
     - /usr/local/bin/docker:/usr/local/bin/docker
     networks: 
-    - default
+      default:
+        ipv4_address: "172.20.0.3"
     
   git-serve:
     build:
@@ -26,9 +27,12 @@ services:
     - "22:22"
     - "80:80"
     networks: 
-    - default
+      default:
+        ipv4_address: "172.20.0.2"
 
 
 networks:
   default:
-    driver: bridge
+    ipam:
+      config:
+        - subnet: "172.20.0.0/16"

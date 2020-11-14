@@ -13,8 +13,8 @@ RUN chmod 777 -R /var/www/git/
 RUN chown -Rfv www-data:www-data /var/www/git
 RUN rm -rf /var/www/html/index.html
 
-RUN git config --system receivepack true
-RUN git config --system uploadpack true
+RUN git config --system http.receivepack true
+RUN git config --system http.uploadpack true
 
 
 RUN chown -Rfv www-data:www-data /var/www/git
@@ -43,7 +43,8 @@ COPY ./git-server/id_rsa.pub /home/ssh/.ssh/authorized_keys
 COPY ./git-server/id_rsa /home/ssh/.ssh/id_rsa
 CMD gosu root service ssh start && \
     /usr/sbin/apache2ctl -D FOREGROUND 
-    
+
+RUN mkrepo projet  
 
 EXPOSE 80/tcp 
 EXPOSE 22/tcp
