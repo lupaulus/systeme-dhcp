@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    triggers {
+        GenericTrigger()
+    } 
     stages {
         stage('Install stuff') { 
             steps{
