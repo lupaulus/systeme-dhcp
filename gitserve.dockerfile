@@ -1,10 +1,10 @@
 FROM debian:9
 
 RUN apt update 2>/dev/null
-RUN apt-get install -y apt-utils 2>/dev/null
-RUN apt-get install -y software-properties-common 2>/dev/null
-RUN apt-get update 2>/dev/null
-RUN apt-get install -y git vim mc sudo gosu apache2 apache2-utils openssh-server 2>/dev/null
+RUN apt-get install -y --no-install-recommends apt-utils 2>/dev/null
+RUN apt-get install -y --no-install-recommends software-properties-common 2>/dev/null
+RUN apt-get update 2>/dev/null && rm -rf /var/lib/apt/lists/*
+RUN apt-get install -y --no-install-recommends git vim mc gosu apache2 apache2-utils openssh-server 2>/dev/null
 
 
 RUN a2enmod env cgi alias rewrite
