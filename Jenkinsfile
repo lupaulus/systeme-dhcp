@@ -1,7 +1,23 @@
 pipeline {
     agent any
     triggers {
-        GenericTrigger()
+        GenericTrigger(
+            genericVariables: [
+            [key: 'ref', value: '$.ref']
+        ],
+        causeString: '',
+
+        token: '',
+        tokenCredentialId: '',
+
+        printContributedVariables: true,
+        printPostContent: true,
+
+        silentResponse: false,
+
+        regexpFilterText: '$ref',
+        regexpFilterExpression: 'refs/heads/' + BRANCH_NAME
+        )
     } 
     stages {
         stage('Install stuff') { 
