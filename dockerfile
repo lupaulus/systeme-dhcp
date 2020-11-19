@@ -1,5 +1,4 @@
 FROM alpine:3.12
-
 RUN set -xe \
 	&& apk add --update --no-progress dhcp \
 	&& rm -rf /var/cache/apk/*
