@@ -15,5 +15,10 @@ pipeline {
                 sh "docker-compose up -d"
             }
         }
+        stage('Stop') {
+            steps {
+                sh "docker-compose down"
+            }
+        }
     }
 }
