@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+  dhcpd:
+    image: joebiellik/dhcpd
+    restart: unless-stopped
+    networks:
+      dhcp_network:
+        ipv4_address: "192.168.16.10"
+    volumes:
+      - ./dhcpd.conf:/etc/dhcp/dhcpd.conf
+
+networks:
+  dhcp_network:
+    ipam:
+      config:
+        - subnet: "192.168.16.0/24"
+        
