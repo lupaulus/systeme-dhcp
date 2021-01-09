@@ -1,0 +1,9 @@
+FROM tomcat:latest
+
+#MAINTAINER ywalch@gmail.com
+
+COPY home/yoann/Documents/jenkins.war /usr/local/tomcat/webapps/
+USER root
+
+CMD [ "catalina.sh", "run" ]
+EXPOSE 8080
